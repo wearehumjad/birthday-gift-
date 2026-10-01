@@ -1,0 +1,1377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Meri Mano ✨</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Dancing+Script:wght@500;600;700&family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Canvas Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        roseGold: '#B76E79',
+                        cozyBg: '#FFF0F3',
+                        softPink: '#FFD1DC',
+                        warmPeach: '#FFE4E1',
+                        deepRose: '#D87093',
+                        cream: '#FFF9F5',
+                        blushPink: '#F4ACB7',
+                        vintageRose: '#9E2A2B'
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        handwriting: ['Dancing Script', 'cursive'],
+                        casual: ['Caveat', 'cursive'],
+                        sans: ['Montserrat', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #FFF0F3 0%, #FFE4E1 25%, #FFD1DC 60%, #FFF5F7 85%, #FFE2E6 100%);
+            background-attachment: fixed;
+            color: #4A3E3D;
+            overflow-x: hidden;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        /* Glassmorphism styling */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.85);
+            box-shadow: 0 10px 30px -5px rgba(216, 112, 147, 0.15);
+        }
+
+        .glass-card-deep {
+            background: rgba(255, 245, 247, 0.9);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 215, 225, 0.95);
+            box-shadow: 0 20px 40px -10px rgba(183, 110, 121, 0.2);
+        }
+
+        /* Polaroid Effect */
+        .polaroid {
+            background: white;
+            padding: 14px 14px 28px 14px;
+            box-shadow: 0 12px 28px rgba(0,0,0,0.08);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .polaroid:hover {
+            transform: translateY(-8px) rotate(1.5deg) scale(1.02);
+            box-shadow: 0 22px 40px rgba(216, 112, 147, 0.25);
+        }
+
+        /* Tape Accent */
+        .tape-accent {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%) rotate(-2deg);
+            width: 90px;
+            height: 26px;
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            z-index: 10;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FFF0F3;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #F4ACB7;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #D87093;
+        }
+
+        /* Wax Seal Button */
+        .wax-seal {
+            background: radial-gradient(circle at 35% 35%, #e63946, #9e2a2b);
+            box-shadow: inset 0 -3px 6px rgba(0,0,0,0.3), 0 6px 15px rgba(158, 42, 43, 0.4);
+            border: 2px solid #ffb703;
+        }
+
+        /* Candle Flame animation */
+        .flame {
+            width: 14px;
+            height: 24px;
+            background: linear-gradient(to bottom, #FFF, #FFB703, #FB8500);
+            border-radius: 50% 50% 35% 35%;
+            margin: 0 auto;
+            animation: flicker 0.6s infinite alternate;
+            box-shadow: 0 0 15px #FFB703, 0 0 25px #FB8500;
+        }
+        @keyframes flicker {
+            0% { transform: scale(1) rotate(-2deg); opacity: 0.9; }
+            100% { transform: scale(1.15) rotate(2deg); opacity: 1; }
+        }
+
+        /* Floating elements background canvas */
+        #heartCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        /* Flip card 3d effects */
+        .flip-card {
+            perspective: 1000px;
+        }
+        .flip-card-inner {
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+        .flip-card.flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        .flip-card-front, .flip-card-back {
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+        .flip-card-back {
+            transform: rotateY(180deg);
+        }
+    </style>
+</head>
+<body class="relative min-h-screen text-stone-700 selection:bg-rose-200 selection:text-rose-800">
+
+    <!-- Background Floating Hearts Canvas -->
+    <canvas id="heartCanvas"></canvas>
+
+    <!-- Tap to Enter Overlay (Satisfies Browser Autoplay Policy) -->
+    <div id="entryOverlay" class="fixed inset-0 z-50 flex flex-col items-center justify-center p-6 bg-gradient-to-br from-rose-100 via-pink-100 to-rose-200 backdrop-blur-xl transition-opacity duration-700">
+        <div class="glass-card-deep max-w-md w-full p-8 rounded-3xl text-center space-y-6 shadow-2xl border border-white">
+            <div class="w-20 h-20 bg-gradient-to-tr from-rose-400 to-rose-600 rounded-full flex items-center justify-center mx-auto shadow-lg shadow-rose-300 animate-bounce">
+                <i class="fas fa-heart text-3xl text-white"></i>
+            </div>
+            <div>
+                <span class="text-xs uppercase tracking-widest text-rose-500 font-semibold">Special Birthday Gift</span>
+                <h2 id="entryGirlTitle" class="font-serif text-3xl font-bold text-stone-800 mt-1">For My Dearest Love</h2>
+                <p class="text-xs text-stone-500 mt-2">A cozy romantic experience created especially for your birthday.</p>
+            </div>
+            <button onclick="enterWebsite()" class="w-full py-4 bg-gradient-to-r from-rose-500 to-deepRose text-white font-medium rounded-full shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 transition-all text-sm tracking-wide flex items-center justify-center gap-2">
+                <i class="fas fa-sparkles"></i> Open Birthday Gift & Play Music
+            </button>
+            <p class="text-[11px] text-stone-400">Turn up your device volume for background music 🎵</p>
+        </div>
+    </div>
+
+    <!-- Top Navigation Header -->
+    <header class="fixed top-4 left-0 right-0 z-40 px-4 max-w-6xl mx-auto flex justify-between items-center pointer-events-none">
+        
+        <div class="pointer-events-auto flex items-center gap-2">
+            <!-- Edit Button (Only visible if edit=true or unlocked) -->
+            <button id="editBtn" onclick="openConfigModal()" class="hidden glass-card px-4 py-2.5 rounded-full flex items-center gap-2 text-xs sm:text-sm font-medium text-stone-700 hover:bg-white transition-all shadow-md hover:scale-105 active:scale-95">
+                <i class="fas fa-edit text-rose-500"></i>
+                <span class="hidden sm:inline">Settings & Music</span>
+                <span class="sm:hidden">Edit</span>
+            </button>
+
+            <!-- Mode Badge -->
+            <span id="modeBadge" class="hidden glass-card px-3 py-1.5 rounded-full text-[11px] font-semibold text-rose-700">
+                ✏️ Edit Mode
+            </span>
+        </div>
+
+        <!-- Audio Player Toggle Button -->
+        <div class="pointer-events-auto flex items-center gap-2">
+            <button id="musicToggle" onclick="toggleAudio()" class="glass-card px-4 py-2.5 rounded-full flex items-center gap-3 text-xs sm:text-sm font-medium text-rose-700 hover:bg-white transition-all shadow-md hover:scale-105 active:scale-95">
+                <span class="relative flex h-3 w-3">
+                  <span id="pulseRing" class="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75 hidden"></span>
+                  <span id="pulseDot" class="relative inline-flex rounded-full h-3 w-3 bg-rose-400"></span>
+                </span>
+                <i id="musicIcon" class="fas fa-music text-rose-500"></i>
+                <span id="musicText">Play Music</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Embed Player Container (Spotify iframe, YouTube iframe, or Direct Audio) -->
+    <div id="embedPlayerContainer" class="fixed bottom-4 right-4 z-40 max-w-sm w-full px-2 hidden">
+        <div class="glass-card p-3 rounded-2xl shadow-2xl border border-rose-300 relative bg-white/90">
+            <div class="flex justify-between items-center mb-1.5">
+                <span class="text-[11px] font-bold text-rose-600 flex items-center gap-1">
+                    <i class="fas fa-compact-disc animate-spin"></i>
+                    <span id="playerTypeLabel">Spotify Music Player</span>
+                </span>
+                <button onclick="toggleEmbedVisibility()" class="text-stone-400 hover:text-rose-600 text-xs px-1">
+                    <i id="embedHideIcon" class="fas fa-chevron-down"></i>
+                </button>
+            </div>
+            
+            <p id="spotifyTapTip" class="text-[10px] text-amber-700 bg-amber-50 p-1.5 rounded-lg mb-2 border border-amber-200 flex items-center gap-1">
+                <span>👉</span> <span><strong>Note:</strong> Tap <strong>Play</strong> on the player widget below!</span>
+            </p>
+
+            <div id="embedFrameHolder" class="w-full h-20 rounded-xl overflow-hidden bg-stone-900 flex items-center justify-center shadow-inner">
+                <!-- iFrame dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <main class="relative z-20 max-w-5xl mx-auto px-4 py-12 space-y-28 sm:space-y-36">
+
+        <!-- Hero Section -->
+        <section class="min-h-[85vh] flex flex-col justify-center items-center text-center pt-16 relative">
+            
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/70 backdrop-blur-md border border-rose-200/60 text-xs sm:text-sm font-medium text-rose-600 mb-6 tracking-wide shadow-sm animate-pulse">
+                <span>💖</span>
+                <span id="badgeGirlName">Happy Birthday Princess</span>
+                <span>💖</span>
+            </div>
+            
+            <h1 class="font-serif text-4xl sm:text-6xl md:text-7xl font-bold text-stone-800 leading-tight mb-4 tracking-tight">
+                To the Light of My Life,<br>
+                <span id="mainGirlName" class="font-handwriting text-5xl sm:text-7xl md:text-8xl text-roseGold font-normal block mt-2 drop-shadow-sm">
+                    Happy Birthday, My Love ✨
+                </span>
+            </h1>
+
+            <p id="heroSubtext" class="max-w-xl text-base sm:text-lg text-stone-600 font-light mt-4 leading-relaxed px-4">
+                Today is all about celebrating you—the most beautiful, kind, and precious person who makes every single day brighter just by existing.
+            </p>
+
+            <!-- Countdown Timer Container -->
+            <div class="mt-10 w-full max-w-xl glass-card-deep p-6 sm:p-8 rounded-3xl space-y-4">
+                <div class="flex justify-between items-center px-2">
+                    <span class="text-xs uppercase tracking-widest text-rose-600 font-semibold flex items-center gap-1.5">
+                        <i class="fas fa-clock"></i> Countdown to Mano's Big Day
+                    </span>
+                    <button id="timerEditTrigger" onclick="openConfigModal()" class="hidden text-xs text-stone-500 hover:text-rose-600 underline font-medium transition-colors">
+                        Edit Target Date
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-4 gap-2 sm:gap-4">
+                    <div class="glass-card p-3 sm:p-5 rounded-2xl flex flex-col items-center">
+                        <span id="days" class="font-serif text-2xl sm:text-4xl md:text-5xl font-bold text-rose-700">00</span>
+                        <span class="text-[10px] sm:text-xs uppercase tracking-widest text-stone-500 mt-1 font-medium">Days</span>
+                    </div>
+                    <div class="glass-card p-3 sm:p-5 rounded-2xl flex flex-col items-center">
+                        <span id="hours" class="font-serif text-2xl sm:text-4xl md:text-5xl font-bold text-rose-700">00</span>
+                        <span class="text-[10px] sm:text-xs uppercase tracking-widest text-stone-500 mt-1 font-medium">Hours</span>
+                    </div>
+                    <div class="glass-card p-3 sm:p-5 rounded-2xl flex flex-col items-center">
+                        <span id="minutes" class="font-serif text-2xl sm:text-4xl md:text-5xl font-bold text-rose-700">00</span>
+                        <span class="text-[10px] sm:text-xs uppercase tracking-widest text-stone-500 mt-1 font-medium">Mins</span>
+                    </div>
+                    <div class="glass-card p-3 sm:p-5 rounded-2xl flex flex-col items-center">
+                        <span id="seconds" class="font-serif text-2xl sm:text-4xl md:text-5xl font-bold text-rose-700">00</span>
+                        <span class="text-[10px] sm:text-xs uppercase tracking-widest text-stone-500 mt-1 font-medium">Secs</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scroll CTA -->
+            <div class="mt-14 animate-bounce">
+                <a href="#gallery" class="inline-flex flex-col items-center text-xs text-rose-600 font-medium tracking-wider uppercase gap-2 hover:text-rose-800 transition-colors">
+                    <span>Scroll To Explore Our World</span>
+                    <i class="fas fa-chevron-down text-sm"></i>
+                </a>
+            </div>
+        </section>
+
+        <!-- Memory Scrapbook / Photo Gallery Section -->
+        <section id="gallery" class="scroll-mt-20 space-y-10">
+            <div class="text-center space-y-2">
+                <span class="font-handwriting text-2xl text-rose-500">Captured Moments</span>
+                <h2 class="font-serif text-3xl sm:text-5xl font-bold text-stone-800">Our Romantic Memory Scrapbook</h2>
+                <p id="gallerySubtitle" class="text-xs sm:text-sm text-stone-500 max-w-lg mx-auto">Moments of joy, laughter, and love that we will cherish forever 💕</p>
+            </div>
+
+            <!-- Polaroid Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 pt-6">
+                
+                <!-- Polaroid 1 -->
+                <div class="polaroid rounded-lg relative group -rotate-1">
+                    <div class="tape-accent"></div>
+                    <div class="relative overflow-hidden aspect-[4/5] rounded bg-rose-50 mb-4 cursor-pointer" onclick="triggerFileInput(1)">
+                        <img id="img-1" src="phot0-1.jpeg?auto=format&fit=crop&w=800&q=80" alt="Special Memory" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="edit-overlay absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-white p-3 text-center hidden">
+                            <i class="fas fa-camera text-2xl mb-2"></i>
+                            <span class="text-xs font-medium">Click to upload photo</span>
+                        </div>
+                    </div>
+                    <input type="file" id="file-1" accept="image/*" class="hidden" onchange="handleImageUpload(event, 1)">
+                    <p id="caption-1" contenteditable="false" class="font-casual text-xl sm:text-2xl text-stone-700 text-center focus:outline-none focus:ring-1 focus:ring-rose-300 rounded px-1">
+                        "Your gorgeous smile that brightens up my whole world ✨"
+                    </p>
+                </div>
+
+                <!-- Polaroid 2 -->
+                <div class="polaroid rounded-lg relative group rotate-2">
+                    <div class="tape-accent"></div>
+                    <div class="relative overflow-hidden aspect-[4/5] rounded bg-rose-50 mb-4 cursor-pointer" onclick="triggerFileInput(2)">
+                        <img id="img-2" src="phot0-2.jpeg?auto=format&fit=crop&w=800&q=80" alt="Sweet Moment" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="edit-overlay absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-white p-3 text-center hidden">
+                            <i class="fas fa-camera text-2xl mb-2"></i>
+                            <span class="text-xs font-medium">Click to upload photo</span>
+                        </div>
+                    </div>
+                    <input type="file" id="file-2" accept="image/*" class="hidden" onchange="handleImageUpload(event, 2)">
+                    <p id="caption-2" contenteditable="false" class="font-casual text-xl sm:text-2xl text-stone-700 text-center focus:outline-none focus:ring-1 focus:ring-rose-300 rounded px-1">
+                        "My favorite place in the universe is right beside you 💖"
+                    </p>
+                </div>
+
+                <!-- Polaroid 3 -->
+                <div class="polaroid rounded-lg relative group -rotate-2">
+                    <div class="tape-accent"></div>
+                    <div class="relative overflow-hidden aspect-[4/5] rounded bg-rose-50 mb-4 cursor-pointer" onclick="triggerFileInput(3)">
+                        <img id="img-3" src="phot0-3.jpeg?auto=format&fit=crop&w=800&q=80" alt="Sweet Laughs" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="edit-overlay absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-white p-3 text-center hidden">
+                            <i class="fas fa-camera text-2xl mb-2"></i>
+                            <span class="text-xs font-medium">Click to upload photo</span>
+                        </div>
+                    </div>
+                    <input type="file" id="file-3" accept="image/*" class="hidden" onchange="handleImageUpload(event, 3)">
+                    <p id="caption-3" contenteditable="false" class="font-casual text-xl sm:text-2xl text-stone-700 text-center focus:outline-none focus:ring-1 focus:ring-rose-300 rounded px-1">
+                        "Laughing together until our stomachs hurt 🌸"
+                    </p>
+                </div>
+
+                <!-- Polaroid 4 -->
+                <div class="polaroid rounded-lg relative group rotate-1">
+                    <div class="tape-accent"></div>
+                    <div class="relative overflow-hidden aspect-[4/5] rounded bg-rose-50 mb-4 cursor-pointer" onclick="triggerFileInput(4)">
+                        <img id="img-4" src="phot0-4.jpeg?auto=format&fit=crop&w=800&q=80" alt="Precious Eyes" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="edit-overlay absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-white p-3 text-center hidden">
+                            <i class="fas fa-camera text-2xl mb-2"></i>
+                            <span class="text-xs font-medium">Click to upload photo</span>
+                        </div>
+                    </div>
+                    <input type="file" id="file-4" accept="image/*" class="hidden" onchange="handleImageUpload(event, 4)">
+                    <p id="caption-4" contenteditable="false" class="font-casual text-xl sm:text-2xl text-stone-700 text-center focus:outline-none focus:ring-1 focus:ring-rose-300 rounded px-1">
+                        "The most beautiful eyes that hold my entire world 💕"
+                    </p>
+                </div>
+
+                <!-- Polaroid 5 -->
+                <div class="polaroid rounded-lg relative group -rotate-1">
+                    <div class="tape-accent"></div>
+                    <div class="relative overflow-hidden aspect-[4/5] rounded bg-rose-50 mb-4 cursor-pointer" onclick="triggerFileInput(5)">
+                        <img id="img-5" src="pho0o-5.jpeg?auto=format&fit=crop&w=800&q=80" alt="Cozy Date" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="edit-overlay absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-white p-3 text-center hidden">
+                            <i class="fas fa-camera text-2xl mb-2"></i>
+                            <span class="text-xs font-medium">Click to upload photo</span>
+                        </div>
+                    </div>
+                    <input type="file" id="file-5" accept="image/*" class="hidden" onchange="handleImageUpload(event, 5)">
+                    <p id="caption-5" contenteditable="false" class="font-casual text-xl sm:text-2xl text-stone-700 text-center focus:outline-none focus:ring-1 focus:ring-rose-300 rounded px-1">
+                        "Prettiest Girl Ever "
+                    </p>
+                </div>
+
+                <!-- Polaroid 6 -->
+                <div class="polaroid rounded-lg relative group rotate-2">
+                    <div class="tape-accent"></div>
+                    <div class="relative overflow-hidden aspect-[4/5] rounded bg-rose-50 mb-4 cursor-pointer" onclick="triggerFileInput(6)">
+                        <img id="img-6" src="phot0-6.jpeg?auto=format&fit=crop&w=800&q=80" alt="Sunset Love" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="edit-overlay absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-white p-3 text-center hidden">
+                            <i class="fas fa-camera text-2xl mb-2"></i>
+                            <span class="text-xs font-medium">Click to upload photo</span>
+                        </div>
+                    </div>
+                    <input type="file" id="file-6" accept="image/*" class="hidden" onchange="handleImageUpload(event, 6)">
+                    <p id="caption-6" contenteditable="false" class="font-casual text-xl sm:text-2xl text-stone-700 text-center focus:outline-none focus:ring-1 focus:ring-rose-300 rounded px-1">
+                        "Here's to making thousands more memories! 🥂"
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Wax Sealed Letter Section -->
+        <section id="letter" class="scroll-mt-20 space-y-8">
+            <div class="text-center space-y-2">
+                <span class="font-handwriting text-2xl text-rose-500">From My Heart To Yours</span>
+                <h2 class="font-serif text-3xl sm:text-5xl font-bold text-stone-800">A Birthday Love Letter</h2>
+            </div>
+
+            <div class="max-w-2xl mx-auto">
+                <!-- Envelope Box -->
+                <div id="envelopeContainer" class="glass-card-deep rounded-3xl p-8 sm:p-12 text-center transition-all duration-700 relative overflow-hidden shadow-xl border border-rose-200">
+                    
+                    <!-- Sealed Envelope State -->
+                    <div id="envelopeClosedState" class="space-y-6 py-6 cursor-pointer" onclick="openLetter()">
+                        <div class="w-20 h-20 wax-seal text-white rounded-full flex items-center justify-center mx-auto shadow-lg hover:scale-110 transition-transform">
+                            <i class="fas fa-heart text-2xl text-amber-200"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-serif text-2xl font-bold text-stone-800">For My Girl's Birthday</h3>
+                            <p class="text-xs text-rose-600 mt-1 uppercase tracking-widest font-semibold">Tap wax seal to open & read</p>
+                        </div>
+                        <div class="inline-block px-4 py-2 bg-rose-100/80 text-rose-700 rounded-full text-xs font-medium">
+                            ✉️ Sealed with endless affection
+                        </div>
+                    </div>
+
+                    <!-- Opened Envelope Content -->
+                    <div id="envelopeOpenState" class="hidden text-left space-y-6 py-2 transition-opacity duration-1000">
+                        <div class="flex justify-between items-center border-b border-rose-200/80 pb-4">
+                            <span class="font-handwriting text-3xl text-rose-600">Dearest Birthday Girl,</span>
+                            <span class="text-xs text-stone-400 font-mono" id="todayDate">Today & Forever</span>
+                        </div>
+
+                        <!-- Long Birthday Wish Message -->
+                        <div id="birthdayWishText" contenteditable="false" class="font-serif text-stone-700 text-base sm:text-lg leading-relaxed space-y-4 focus:outline-none focus:ring-1 focus:ring-rose-300 rounded p-2">
+                            <p>
+                                Happy Birthday to the most breathtaking, kind, and precious human being in my entire world! 🌸
+                            </p>
+                            <p>
+                                Words often fail to describe how much you truly mean to me. Ever since you walked into my life, everything became brighter, warmer, and sweeter. You bring so much light into my days with your warm laugh, your gentle soul, and the way you care so deeply for everyone around you.
+                            </p>
+                            <p>
+                                Thank you for all the precious moments we share the silly jokes, the late-night talks, the comfortable silences, and every single memory in between. You are not only my girlfriend, but my safest home and my best friend.
+                            </p>
+                            <p>
+                                On your special day, my deepest wish for you is endless joy, good health, peace of mind, and the absolute fulfillment of every dream you hold in your heart. I promise to always stand by your side, support you, protect your smile, and love you more with every passing sunrise.
+                            </p>
+                            <p class="font-handwriting text-3xl text-rose-600 pt-4">
+                                Forever & Always Yours,<br>
+                                ❤️ Your Biggest Fan
+                            </p>
+                        </div>
+
+                        <div class="pt-4 border-t border-rose-200/80 flex flex-wrap gap-2 justify-between items-center">
+                            <button onclick="copyLetterText(event)" class="px-3.5 py-2 bg-rose-100 hover:bg-rose-200 text-rose-700 rounded-xl text-xs font-medium transition-colors">
+                                <i class="fas fa-copy mr-1"></i> Copy Message Text
+                            </button>
+                            <span id="letterEditTip" class="text-[11px] text-stone-400 italic hidden">💡 You can edit this letter directly on screen in Edit Mode!</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Reasons Why I Love You Section -->
+        <section class="scroll-mt-20 space-y-10">
+            <div class="text-center space-y-2">
+                <span class="font-handwriting text-2xl text-rose-500">Little Love Notes</span>
+                <h2 class="font-serif text-3xl sm:text-5xl font-bold text-stone-800">Reasons Why I Love You</h2>
+                <p class="text-xs text-stone-500">Tap each card to flip and discover a sweet note!</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                
+                <!-- Card 1 -->
+                <div class="flip-card h-52 cursor-pointer" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner relative w-full h-full rounded-2xl shadow-sm">
+                        <!-- Front -->
+                        <div class="flip-card-front absolute inset-0 glass-card rounded-2xl p-6 flex flex-col items-center justify-center text-center border border-rose-200">
+                            <span class="text-4xl mb-3">✨</span>
+                            <h4 class="font-serif font-bold text-stone-800 text-lg">Your Pure Heart</h4>
+                            <p class="text-xs text-rose-500 mt-2">Tap to flip card 💌</p>
+                        </div>
+                        <!-- Back -->
+                        <div class="flip-card-back absolute inset-0 bg-gradient-to-br from-rose-400 to-rose-500 text-white rounded-2xl p-6 flex items-center justify-center text-center">
+                            <p class="font-handwriting text-2xl leading-snug">"The gentle kindness and genuine empathy you show everyone around you."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="flip-card h-52 cursor-pointer" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner relative w-full h-full rounded-2xl shadow-sm">
+                        <!-- Front -->
+                        <div class="flip-card-front absolute inset-0 glass-card rounded-2xl p-6 flex flex-col items-center justify-center text-center border border-rose-200">
+                            <span class="text-4xl mb-3">🌸</span>
+                            <h4 class="font-serif font-bold text-stone-800 text-lg">Your Beautiful Smile</h4>
+                            <p class="text-xs text-rose-500 mt-2">Tap to flip card 💌</p>
+                        </div>
+                        <!-- Back -->
+                        <div class="flip-card-back absolute inset-0 bg-gradient-to-br from-rose-400 to-rose-500 text-white rounded-2xl p-6 flex items-center justify-center text-center">
+                            <p class="font-handwriting text-2xl leading-snug">"Your precious laugh that instantly heals my heart on hard days."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="flip-card h-52 cursor-pointer" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner relative w-full h-full rounded-2xl shadow-sm">
+                        <!-- Front -->
+                        <div class="flip-card-front absolute inset-0 glass-card rounded-2xl p-6 flex flex-col items-center justify-center text-center border border-rose-200">
+                            <span class="text-4xl mb-3">💖</span>
+                            <h4 class="font-serif font-bold text-stone-800 text-lg">How Cozy You Are</h4>
+                            <p class="text-xs text-rose-500 mt-2">Tap to flip card 💌</p>
+                        </div>
+                        <!-- Back -->
+                        <div class="flip-card-back absolute inset-0 bg-gradient-to-br from-rose-400 to-rose-500 text-white rounded-2xl p-6 flex items-center justify-center text-center">
+                            <p class="font-handwriting text-2xl leading-snug">"How warm and safe it feels whenever I get to hold your hand."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="flip-card h-52 cursor-pointer" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner relative w-full h-full rounded-2xl shadow-sm">
+                        <!-- Front -->
+                        <div class="flip-card-front absolute inset-0 glass-card rounded-2xl p-6 flex flex-col items-center justify-center text-center border border-rose-200">
+                            <span class="text-4xl mb-3">🌙</span>
+                            <h4 class="font-serif font-bold text-stone-800 text-lg">Our Late Night Talks</h4>
+                            <p class="text-xs text-rose-500 mt-2">Tap to flip card 💌</p>
+                        </div>
+                        <!-- Back -->
+                        <div class="flip-card-back absolute inset-0 bg-gradient-to-br from-rose-400 to-rose-500 text-white rounded-2xl p-6 flex items-center justify-center text-center">
+                            <p class="font-handwriting text-2xl leading-snug">"How we can talk for hours about everything and nothing at all."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 5 -->
+                <div class="flip-card h-52 cursor-pointer" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner relative w-full h-full rounded-2xl shadow-sm">
+                        <!-- Front -->
+                        <div class="flip-card-front absolute inset-0 glass-card rounded-2xl p-6 flex flex-col items-center justify-center text-center border border-rose-200">
+                            <span class="text-4xl mb-3">🦋</span>
+                            <h4 class="font-serif font-bold text-stone-800 text-lg">Your Cutest Quirks</h4>
+                            <p class="text-xs text-rose-500 mt-2">Tap to flip card 💌</p>
+                        </div>
+                        <!-- Back -->
+                        <div class="flip-card-back absolute inset-0 bg-gradient-to-br from-rose-400 to-rose-500 text-white rounded-2xl p-6 flex items-center justify-center text-center">
+                            <p class="font-handwriting text-2xl leading-snug">"Every adorable little habit of yours that makes you so unique."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 6 -->
+                <div class="flip-card h-52 cursor-pointer" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner relative w-full h-full rounded-2xl shadow-sm">
+                        <!-- Front -->
+                        <div class="flip-card-front absolute inset-0 glass-card rounded-2xl p-6 flex flex-col items-center justify-center text-center border border-rose-200">
+                            <span class="text-4xl mb-3">♾️</span>
+                            <h4 class="font-serif font-bold text-stone-800 text-lg">Our Future Together</h4>
+                            <p class="text-xs text-rose-500 mt-2">Tap to flip card 💌</p>
+                        </div>
+                        <!-- Back -->
+                        <div class="flip-card-back absolute inset-0 bg-gradient-to-br from-rose-400 to-rose-500 text-white rounded-2xl p-6 flex items-center justify-center text-center">
+                            <p class="font-handwriting text-2xl leading-snug">"Because spending my life with you is my absolute dream come true."</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Candle Blowing Birthday Cake Section -->
+        <section class="scroll-mt-20 space-y-8">
+            <div class="text-center space-y-2">
+                <span class="font-handwriting text-2xl text-rose-500">Make A Special Birthday Wish</span>
+                <h2 class="font-serif text-3xl sm:text-5xl font-bold text-stone-800">Blow Out The Candles</h2>
+            </div>
+
+            <div class="glass-card-deep rounded-3xl p-8 sm:p-12 text-center max-w-xl mx-auto space-y-8 relative">
+                
+                <!-- Virtual Cake Component -->
+                <div class="relative py-6 flex flex-col items-center justify-center">
+                    <!-- Glowing Candles -->
+                    <div class="flex gap-5 mb-2 z-10">
+                        <div class="relative">
+                            <div id="flame1" class="flame"></div>
+                            <div class="w-3.5 h-14 bg-pink-300 rounded-t-sm shadow-inner"></div>
+                        </div>
+                        <div class="relative">
+                            <div id="flame2" class="flame"></div>
+                            <div class="w-3.5 h-14 bg-amber-200 rounded-t-sm shadow-inner"></div>
+                        </div>
+                        <div class="relative">
+                            <div id="flame3" class="flame"></div>
+                            <div class="w-3.5 h-14 bg-rose-300 rounded-t-sm shadow-inner"></div>
+                        </div>
+                    </div>
+
+                    <!-- Cake Layers -->
+                    <div class="w-52 h-14 bg-rose-300 rounded-t-2xl shadow-md border-b-4 border-rose-400 flex items-center justify-center">
+                        <span class="text-xs font-bold text-white tracking-widest uppercase">✨ Happy Birthday ✨</span>
+                    </div>
+                    <div class="w-72 h-20 bg-cream rounded-b-3xl shadow-xl border-t-2 border-rose-200 relative overflow-hidden flex items-center justify-center">
+                        <div class="absolute inset-x-0 top-0 h-4 bg-rose-200/80 rounded-b-full"></div>
+                    </div>
+                </div>
+
+                <!-- Wish Controls -->
+                <div class="space-y-4">
+                    <p id="candleStatusText" class="text-sm font-medium text-stone-600">Close your eyes, make a sweet wish, and blow out the candles!</p>
+                    
+                    <button id="blowBtn" onclick="blowCandles()" class="px-8 py-4 bg-gradient-to-r from-rose-500 to-deepRose text-white font-medium rounded-full shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 transition-all text-sm tracking-wide">
+                        🎂 Blow Out Candles & Celebrate!
+                    </button>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="text-center py-12 border-t border-rose-200/60 space-y-4">
+            <p class="font-handwriting text-3xl text-rose-600">Created with endless love, just for you 💕</p>
+            <p class="text-xs text-stone-400">Happy Birthday, My Whole World.</p>
+            
+            <!-- Discreet Secret Edit Button for Boyfriend in View Mode -->
+            <button onclick="unlockEditMode()" class="text-[10px] text-rose-300 hover:text-rose-500 transition-colors opacity-60">
+                <i class="fas fa-lock text-[9px] mr-1"></i> Settings / Owner Access
+            </button>
+        </footer>
+
+    </main>
+
+    <!-- Customization Setup Modal (Only for Edit Mode) -->
+    <div id="configModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="glass-card-deep max-w-lg w-full p-6 sm:p-8 rounded-3xl space-y-6 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeConfigModal()" class="absolute top-5 right-5 text-stone-400 hover:text-stone-700 text-lg">
+                <i class="fas fa-times"></i>
+            </button>
+
+            <div class="border-b border-rose-200/80 pb-3">
+                <h3 class="font-serif text-2xl font-bold text-stone-800 flex items-center gap-2">
+                    <i class="fas fa-sliders text-rose-500 text-xl"></i> Settings & Music Setup
+                </h3>
+                <p class="text-xs text-stone-500 mt-1">Customize her site, add music, and generate a clean shareable link!</p>
+            </div>
+
+            <div class="space-y-4 text-xs sm:text-sm">
+                <!-- Her Name -->
+                <div class="space-y-1">
+                    <label class="font-medium text-stone-700">Girlfriend's Name / Title:</label>
+                    <input type="text" id="configGirlName" placeholder="e.g. Sarah" class="w-full px-3.5 py-2.5 rounded-xl bg-white/90 border border-rose-200 focus:outline-none focus:ring-2 focus:ring-rose-300">
+                </div>
+
+                <!-- Target Birthday Date -->
+                <div class="space-y-1">
+                    <label class="font-medium text-stone-700">Target Birthday Date & Time:</label>
+                    <input type="datetime-local" id="configTargetDate" class="w-full px-3.5 py-2.5 rounded-xl bg-white/90 border border-rose-200 focus:outline-none focus:ring-2 focus:ring-rose-300">
+                </div>
+
+                <!-- Music / Audio Selection -->
+                <div class="space-y-2">
+                    <label class="font-medium text-stone-700 block">Background Music Selection:</label>
+                    
+                    <!-- Preset Audio Tracks Options -->
+                    <div class="space-y-1.5">
+                        <span class="text-[11px] text-stone-500 font-medium">Option A: Select Romantic Preset (Autoplays automatically!):</span>
+                        <select id="configPresetMusic" onchange="onPresetMusicSelect()" class="w-full px-3.5 py-2.5 rounded-xl bg-white/90 border border-rose-200 focus:outline-none focus:ring-2 focus:ring-rose-300 text-stone-700">
+                            <option value="">-- Custom Link below --</option>
+                            <option value="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=romantic-piano-112181.mp3">🎹 Romantic Piano Melody (Recommended)</option>
+                            <option value="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8b9829f07.mp3?filename=sweet-love-10904.mp3">✨ Soft Melodic Love Song</option>
+                            <option value="https://cdn.pixabay.com/download/audio/2021/11/25/audio_2448496734.mp3?filename=sweet-piano-music-box-10332.mp3">🧸 Sweet Music Box Lullaby</option>
+                        </select>
+                    </div>
+
+                    <!-- Custom Link Input -->
+                    <div class="space-y-1 pt-1">
+                        <span class="text-[11px] text-stone-500 font-medium">Option B: Paste Spotify / YouTube / Direct MP3 link:</span>
+                        <input type="text" id="configMusicUrl" placeholder="Paste Spotify track link (e.g. open.spotify.com/track/...)" class="w-full px-3.5 py-2.5 rounded-xl bg-white/90 border border-rose-200 focus:outline-none focus:ring-2 focus:ring-rose-300">
+                    </div>
+
+                    <div class="bg-rose-50/90 p-3 rounded-xl border border-rose-200 text-[11px] text-stone-600 space-y-1">
+                        <p class="font-semibold text-rose-700">💡 How Spotify Links Work:</p>
+                        <p>• Paste your Spotify URL: <code class="bg-white px-1 py-0.5 rounded border border-rose-100">https://open.spotify.com/track/4cOd...</code></p>
+                        <p>• <strong>Important:</strong> Browser security rules require tapping <strong>Play</strong> inside the Spotify player widget at the bottom right corner when opening the site!</p>
+                    </div>
+                </div>
+
+                <!-- Clean Link Generator Section -->
+                <div class="pt-3 border-t border-rose-200/80 space-y-2">
+                    <label class="font-medium text-stone-700 block">Shareable Link Generator:</label>
+                    <div class="flex gap-2">
+                        <input type="text" id="shareLinkPreview" readonly placeholder="Click generate button to create short link..." class="flex-1 px-3 py-2 text-xs rounded-xl bg-stone-100 border border-stone-200 text-stone-600 select-all">
+                        <button onclick="generateGirlfriendLink()" class="px-4 py-2 bg-rose-500 hover:bg-rose-600 text-white font-medium rounded-xl text-xs transition-all shadow shrink-0 flex items-center gap-1.5">
+                            <i class="fas fa-link"></i> Copy Link
+                        </button>
+                    </div>
+                    <p class="text-[10px] text-stone-400">✨ Creates a clean, short URL (without long code text) ready to send directly to your girlfriend!</p>
+                </div>
+            </div>
+
+            <div class="flex gap-3 pt-2">
+                <button onclick="saveConfiguration()" class="w-full py-3 bg-gradient-to-r from-rose-500 to-deepRose text-white font-medium rounded-xl shadow-md hover:scale-[1.02] active:scale-95 transition-all text-xs sm:text-sm">
+                    Save Changes To Website
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden Custom Audio Tag -->
+    <audio id="customAudio" loop preload="auto"></audio>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-6 left-6 z-50 glass-card-deep px-5 py-3 rounded-2xl text-xs font-medium text-stone-700 shadow-xl opacity-0 pointer-events-none transition-all duration-300 transform translate-y-2">
+        Settings updated!
+    </div>
+
+    <script>
+        // --- State Variables ---
+        let isEditMode = false;
+        let targetBirthday = new Date();
+        targetBirthday.setHours(23, 59, 59);
+
+        let customAudioUrl = 'tumho.mp3';
+        let isAudioPlaying = false;
+        let audioCtx = null;
+        let melodyInterval = null;
+
+        // Romantic synthesizer melody fallback frequencies
+        const melody = [
+            261.63, 261.63, 293.66, 261.63, 349.23, 329.63,
+            261.63, 261.63, 293.66, 261.63, 392.00, 349.23,
+            261.63, 261.63, 523.25, 440.00, 349.23, 329.63, 293.66,
+            466.16, 466.16, 440.00, 349.23, 392.00, 349.23
+        ];
+        let noteIndex = 0;
+
+        // Clipboard Copy Helper Function
+        function copyToClipboard(text) {
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(text).catch(() => fallbackCopy(text));
+            } else {
+                fallbackCopy(text);
+            }
+        }
+
+        function fallbackCopy(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.style.position = 'fixed';
+            textarea.style.left = '-9999px';
+            document.body.appendChild(textarea);
+            textarea.select();
+            try {
+                document.execCommand('copy');
+            } catch (err) {
+                console.error('Copy fallback failed', err);
+            }
+            document.body.removeChild(textarea);
+        }
+
+        // Mode & URL Query Parameters Handler
+        function detectMode() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const modeParam = urlParams.get('mode') || urlParams.get('edit');
+
+            if (modeParam === 'edit' || modeParam === 'true') {
+                enableEditMode();
+            } else {
+                enableViewMode();
+            }
+
+            // Load clean URL parameters
+            loadFromUrlParams(urlParams);
+        }
+
+        function loadFromUrlParams(urlParams) {
+            const name = urlParams.get('name');
+            const date = urlParams.get('date');
+            const music = urlParams.get('music');
+            const letter = urlParams.get('letter');
+
+            if (name) {
+                applyGirlfriendName(name);
+            } else {
+                loadFromLocalStorage();
+            }
+
+            if (date) {
+                targetBirthday = new Date(date);
+                updateCountdown();
+            }
+
+            if (music) {
+                customAudioUrl = music;
+                const configMusic = document.getElementById('configMusicUrl');
+                if (configMusic) configMusic.value = music;
+            }
+
+            if (letter) {
+                const wishText = document.getElementById('birthdayWishText');
+                if (wishText) wishText.innerHTML = decodeURIComponent(letter);
+            }
+
+            for (let i = 1; i <= 6; i++) {
+                const capVal = urlParams.get(`c${i}`);
+                const imgVal = urlParams.get(`i${i}`);
+
+                if (capVal) {
+                    const cap = document.getElementById(`caption-${i}`);
+                    if (cap) cap.innerHTML = decodeURIComponent(capVal);
+                }
+                if (imgVal) {
+                    const img = document.getElementById(`img-${i}`);
+                    if (img) img.src = decodeURIComponent(imgVal);
+                }
+            }
+        }
+
+        function applyGirlfriendName(name) {
+            const badge = document.getElementById('badgeGirlName');
+            const mainName = document.getElementById('mainGirlName');
+            const entryTitle = document.getElementById('entryGirlTitle');
+            const configName = document.getElementById('configGirlName');
+            
+            if (badge) badge.innerText = name;
+            if (mainName) mainName.innerText = `${name} ✨`;
+            if (entryTitle) entryTitle.innerText = `For My ${name}`;
+            if (configName) configName.value = name;
+        }
+
+        function enableEditMode() {
+            isEditMode = true;
+            document.getElementById('editBtn')?.classList.remove('hidden');
+            document.getElementById('modeBadge')?.classList.remove('hidden');
+            document.getElementById('timerEditTrigger')?.classList.remove('hidden');
+            document.getElementById('letterEditTip')?.classList.remove('hidden');
+            
+            const gallerySub = document.getElementById('gallerySubtitle');
+            if (gallerySub) gallerySub.innerText = "Click on any photo frame to upload your own picture, and click text to edit captions!";
+
+            const wishText = document.getElementById('birthdayWishText');
+            if (wishText) wishText.contentEditable = "true";
+            for (let i = 1; i <= 6; i++) {
+                const cap = document.getElementById(`caption-${i}`);
+                if (cap) cap.contentEditable = "true";
+            }
+
+            document.querySelectorAll('.edit-overlay').forEach(el => el.classList.remove('hidden'));
+        }
+
+        function enableViewMode() {
+            isEditMode = false;
+            document.getElementById('editBtn')?.classList.add('hidden');
+            document.getElementById('modeBadge')?.classList.add('hidden');
+            document.getElementById('timerEditTrigger')?.classList.add('hidden');
+            document.getElementById('letterEditTip')?.classList.add('hidden');
+            
+            const gallerySub = document.getElementById('gallerySubtitle');
+            if (gallerySub) gallerySub.innerText = "Moments of joy, laughter, and love that we will cherish forever 💕";
+
+            const wishText = document.getElementById('birthdayWishText');
+            if (wishText) wishText.contentEditable = "false";
+            for (let i = 1; i <= 6; i++) {
+                const cap = document.getElementById(`caption-${i}`);
+                if (cap) cap.contentEditable = "false";
+            }
+
+            document.querySelectorAll('.edit-overlay').forEach(el => el.classList.add('hidden'));
+        }
+
+        function unlockEditMode() {
+    const pass = prompt("Enter passcode to unlock Edit Mode:");
+    
+    // If user presses Cancel
+    if (pass === null) {
+        return;
+    }
+    
+    // Check if passcode matches strictly
+    if (pass.trim() === '3626') {
+        enableEditMode();
+        openConfigModal();
+        showToast("Unlocked Admin Edit Mode! ✨");
+    } else {
+        alert("Incorrect passcode! Access denied.");
+    }
+}
+
+        // Enter Website Overlay & Autoplay Trigger
+        function enterWebsite() {
+            const overlay = document.getElementById('entryOverlay');
+            if (overlay) {
+                overlay.classList.add('opacity-0', 'pointer-events-none');
+                setTimeout(() => { overlay.style.display = 'none'; }, 700);
+            }
+            toggleAudio(true);
+        }
+
+        // Audio Source URL Parser (Spotify / YouTube / Direct MP3)
+        function parseAudioUrl(url) {
+            if (!url) return { type: 'mp3', embedUrl: 'https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=romantic-piano-112181.mp3' };
+            url = url.trim();
+
+            if (url.includes('spotify.com')) {
+                let trackId = '';
+                if (url.includes('/track/')) {
+                    trackId = url.split('/track/')[1].split('?')[0];
+                } else if (url.includes('spotify:track:')) {
+                    trackId = url.split('spotify:track:')[1];
+                }
+                if (trackId) {
+                    return { type: 'spotify', embedUrl: `https://open.spotify.com/embed/track/${trackId}?utm_source=generator&theme=0` };
+                }
+            }
+
+            if (url.includes('youtube.com') || url.includes('youtu.be')) {
+                let videoId = '';
+                if (url.includes('v=')) {
+                    videoId = url.split('v=')[1].split('&')[0];
+                } else if (url.includes('youtu.be/')) {
+                    videoId = url.split('youtu.be/')[1].split('?')[0];
+                }
+                if (videoId) {
+                    return { type: 'youtube', embedUrl: `https://www.youtube.com/embed/${videoId}?autoplay=1&enablejsapi=1` };
+                }
+            }
+
+            return { type: 'mp3', embedUrl: url };
+        }
+
+        function toggleAudio(forceStart = false) {
+            const musicText = document.getElementById('musicText');
+            const musicIcon = document.getElementById('musicIcon');
+            const pulseRing = document.getElementById('pulseRing');
+            const embedContainer = document.getElementById('embedPlayerContainer');
+            const frameHolder = document.getElementById('embedFrameHolder');
+            const customAudio = document.getElementById('customAudio');
+            const spotifyTip = document.getElementById('spotifyTapTip');
+            const label = document.getElementById('playerTypeLabel');
+
+            if (forceStart) isAudioPlaying = false;
+
+            if (!isAudioPlaying) {
+                isAudioPlaying = true;
+                if (musicText) musicText.innerText = "Music Playing 💕";
+                if (musicIcon) musicIcon.className = "fas fa-heart text-rose-500 animate-bounce";
+                if (pulseRing) pulseRing.classList.remove('hidden');
+
+                const parsed = parseAudioUrl(customAudioUrl);
+
+                if (parsed.type === 'spotify') {
+                    if (embedContainer) embedContainer.classList.remove('hidden');
+                    if (spotifyTip) spotifyTip.classList.remove('hidden');
+                    if (label) label.innerText = "Spotify Audio Player";
+                    if (frameHolder) frameHolder.innerHTML = `<iframe src="${parsed.embedUrl}" width="100%" height="80" frameborder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>`;
+                } else if (parsed.type === 'youtube') {
+                    if (embedContainer) embedContainer.classList.remove('hidden');
+                    if (spotifyTip) spotifyTip.classList.remove('hidden');
+                    if (label) label.innerText = "YouTube Music Player";
+                    if (frameHolder) frameHolder.innerHTML = `<iframe src="${parsed.embedUrl}" width="100%" height="80" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+                } else {
+                    // Direct MP3 Audio playback
+                    if (embedContainer) embedContainer.classList.add('hidden');
+                    if (customAudio) {
+                        customAudio.src = parsed.embedUrl;
+                        customAudio.play().catch(err => {
+                            console.log("MP3 play fallback to synth", err);
+                            startSynthMelody();
+                        });
+                    }
+                }
+                showToast("Playing romantic background music 🎵");
+            } else {
+                isAudioPlaying = false;
+                if (musicText) musicText.innerText = "Play Music";
+                if (musicIcon) musicIcon.className = "fas fa-music text-rose-500";
+                if (pulseRing) pulseRing.classList.add('hidden');
+
+                if (frameHolder) frameHolder.innerHTML = '';
+                if (embedContainer) embedContainer.classList.add('hidden');
+                if (customAudio) customAudio.pause();
+                clearInterval(melodyInterval);
+            }
+        }
+
+        function startSynthMelody() {
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            noteIndex = 0;
+            clearInterval(melodyInterval);
+            melodyInterval = setInterval(() => {
+                playSynthNote(melody[noteIndex], 0.8);
+                noteIndex = (noteIndex + 1) % melody.length;
+            }, 520);
+        }
+
+        function playSynthNote(freq, duration) {
+            if (!audioCtx) return;
+            try {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+                gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + duration);
+            } catch(e) {}
+        }
+
+        function toggleEmbedVisibility() {
+            const frameHolder = document.getElementById('embedFrameHolder');
+            const icon = document.getElementById('embedHideIcon');
+            if (frameHolder && icon) {
+                if (frameHolder.classList.contains('hidden')) {
+                    frameHolder.classList.remove('hidden');
+                    icon.className = "fas fa-chevron-down";
+                } else {
+                    frameHolder.classList.add('hidden');
+                    icon.className = "fas fa-chevron-up";
+                }
+            }
+        }
+
+        function onPresetMusicSelect() {
+            const select = document.getElementById('configPresetMusic');
+            const input = document.getElementById('configMusicUrl');
+            if (select && select.value && input) {
+                input.value = select.value;
+            }
+        }
+
+        function updateCountdown() {
+            const now = new Date();
+            const diff = targetBirthday - now;
+
+            const dEl = document.getElementById('days');
+            const hEl = document.getElementById('hours');
+            const mEl = document.getElementById('minutes');
+            const sEl = document.getElementById('seconds');
+
+            if (diff > 0) {
+                const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+                const m = Math.floor((diff / 1000 / 60) % 60);
+                const s = Math.floor((diff / 1000) % 60);
+
+                if (dEl) dEl.innerText = String(d).padStart(2, '0');
+                if (hEl) hEl.innerText = String(h).padStart(2, '0');
+                if (mEl) mEl.innerText = String(m).padStart(2, '0');
+                if (sEl) sEl.innerText = String(s).padStart(2, '0');
+            } else {
+                if (dEl) dEl.innerText = "00";
+                if (hEl) hEl.innerText = "00";
+                if (mEl) mEl.innerText = "00";
+                if (sEl) sEl.innerText = "00";
+            }
+        }
+        setInterval(updateCountdown, 1000);
+
+        function saveConfiguration() {
+            const nameInput = document.getElementById('configGirlName')?.value.trim();
+            const dateInput = document.getElementById('configTargetDate')?.value;
+            const musicInput = document.getElementById('configMusicUrl')?.value.trim();
+
+            if (nameInput) {
+                applyGirlfriendName(nameInput);
+            }
+
+            if (dateInput) {
+                targetBirthday = new Date(dateInput);
+                updateCountdown();
+            }
+
+            if (musicInput) {
+                customAudioUrl = musicInput;
+                if (isAudioPlaying) {
+                    toggleAudio(); // Restart with new source
+                    toggleAudio();
+                }
+            }
+
+            saveToLocalStorage();
+            generateGirlfriendLink(); // Update share link preview
+            closeConfigModal();
+            showToast("Saved all customizations!");
+        }
+
+        function saveToLocalStorage() {
+            const girlNameVal = document.getElementById('configGirlName')?.value || 'Princess';
+            const wishTextEl = document.getElementById('birthdayWishText');
+            const payload = {
+                girlName: girlNameVal,
+                targetDate: targetBirthday.toISOString(),
+                musicUrl: customAudioUrl,
+                letterText: wishTextEl ? wishTextEl.innerHTML : '',
+                captions: []
+            };
+            for (let i = 1; i <= 6; i++) {
+                const cap = document.getElementById(`caption-${i}`);
+                const img = document.getElementById(`img-${i}`);
+                payload.captions.push({
+                    caption: cap ? cap.innerHTML : '',
+                    imgSrc: img ? img.src : ''
+                });
+            }
+            localStorage.setItem('birthday_site_data', JSON.stringify(payload));
+        }
+
+        function loadFromLocalStorage() {
+            const saved = localStorage.getItem('birthday_site_data');
+            if (saved) {
+                try {
+                    const data = JSON.parse(saved);
+                    if (data.girlName) applyGirlfriendName(data.girlName);
+                    if (data.targetDate) {
+                        targetBirthday = new Date(data.targetDate);
+                        updateCountdown();
+                    }
+                    if (data.musicUrl) {
+                        customAudioUrl = data.musicUrl;
+                        const configMusic = document.getElementById('configMusicUrl');
+                        if (configMusic) configMusic.value = data.musicUrl;
+                    }
+                    if (data.letterText) {
+                        const wishText = document.getElementById('birthdayWishText');
+                        if (wishText) wishText.innerHTML = data.letterText;
+                    }
+                    if (data.captions && Array.isArray(data.captions)) {
+                        data.captions.forEach((item, idx) => {
+                            const cap = document.getElementById(`caption-${idx+1}`);
+                            const img = document.getElementById(`img-${idx+1}`);
+                            if (cap && item.caption) cap.innerHTML = item.caption;
+                            if (img && item.imgSrc) img.src = item.imgSrc;
+                        });
+                    }
+                } catch(e) {}
+            }
+        }
+
+        // GENERATE CLEAN SHAREABLE LINK (No long code text!)
+        function generateGirlfriendLink() {
+            saveToLocalStorage();
+            
+            const params = new URLSearchParams();
+            const girlName = document.getElementById('configGirlName')?.value.trim() || 'Princess';
+            params.set('name', girlName);
+
+            if (targetBirthday) {
+                params.set('date', targetBirthday.toISOString());
+            }
+
+            if (customAudioUrl) {
+                params.set('music', customAudioUrl);
+            }
+
+            const wishTextEl = document.getElementById('birthdayWishText');
+            if (wishTextEl) {
+                params.set('letter', encodeURIComponent(wishTextEl.innerHTML));
+            }
+
+            // Include captions and only standard HTTP image URLs (Exclude base64 data)
+            for (let i = 1; i <= 6; i++) {
+                const cap = document.getElementById(`caption-${i}`);
+                const img = document.getElementById(`img-${i}`);
+                if (cap) {
+                    params.set(`c${i}`, encodeURIComponent(cap.innerHTML));
+                }
+                if (img && img.src && img.src.startsWith('http')) {
+                    params.set(`i${i}`, encodeURIComponent(img.src));
+                }
+            }
+
+            const cleanShareUrl = window.location.origin + window.location.pathname + '?' + params.toString();
+            
+            const previewInput = document.getElementById('shareLinkPreview');
+            if (previewInput) previewInput.value = cleanShareUrl;
+
+            copyToClipboard(cleanShareUrl);
+            showToast("Copied clean share link for your girlfriend! 💕");
+        }
+
+        function triggerFileInput(index) {
+            if (!isEditMode) return;
+            document.getElementById(`file-${index}`)?.click();
+        }
+
+        function handleImageUpload(event, index) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.getElementById(`img-${index}`);
+                    if (img) img.src = e.target.result;
+                    saveToLocalStorage();
+                    showToast("Photo updated!");
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function openLetter() {
+            document.getElementById('envelopeClosedState')?.classList.add('hidden');
+            document.getElementById('envelopeOpenState')?.classList.remove('hidden');
+
+            if (typeof confetti === 'function') {
+                confetti({
+                    particleCount: 60,
+                    spread: 70,
+                    origin: { y: 0.6 },
+                    colors: ['#FFD1DC', '#FFE4E1', '#D87093']
+                });
+            }
+        }
+
+        function copyLetterText(e) {
+            e.stopPropagation();
+            const wishText = document.getElementById('birthdayWishText');
+            if (wishText) {
+                copyToClipboard(wishText.innerText);
+                showToast("Love letter copied to clipboard!");
+            }
+        }
+
+        let candlesBlown = false;
+        function blowCandles() {
+            const flame1 = document.getElementById('flame1');
+            const flame2 = document.getElementById('flame2');
+            const flame3 = document.getElementById('flame3');
+            const statusText = document.getElementById('candleStatusText');
+            const blowBtn = document.getElementById('blowBtn');
+
+            if (!candlesBlown) {
+                if (flame1) flame1.style.display = 'none';
+                if (flame2) flame2.style.display = 'none';
+                if (flame3) flame3.style.display = 'none';
+                
+                if (statusText) statusText.innerText = "✨ Your wish is sent to the stars! May all your dreams come true! ✨";
+                if (blowBtn) blowBtn.innerText = "🎉 Relight Candles";
+                candlesBlown = true;
+
+                if (typeof confetti === 'function') {
+                    const duration = 3 * 1000;
+                    const animationEnd = Date.now() + duration;
+                    const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+                    const interval = setInterval(function() {
+                      const timeLeft = animationEnd - Date.now();
+                      if (timeLeft <= 0) return clearInterval(interval);
+
+                      const particleCount = 50 * (timeLeft / duration);
+                      confetti(Object.assign({}, defaults, { particleCount, origin: { x: Math.random() * 0.4 + 0.1, y: Math.random() - 0.2 } }));
+                      confetti(Object.assign({}, defaults, { particleCount, origin: { x: Math.random() * 0.4 + 0.5, y: Math.random() - 0.2 } }));
+                    }, 250);
+                }
+
+            } else {
+                if (flame1) flame1.style.display = 'block';
+                if (flame2) flame2.style.display = 'block';
+                if (flame3) flame3.style.display = 'block';
+                if (statusText) statusText.innerText = "Close your eyes, make a sweet wish, and blow out the candles!";
+                if (blowBtn) blowBtn.innerText = "🎂 Blow Out Candles & Celebrate!";
+                candlesBlown = false;
+            }
+        }
+
+        function openConfigModal() {
+            document.getElementById('configModal')?.classList.remove('opacity-0', 'pointer-events-none');
+            generateGirlfriendLink(); // Pre-fill preview
+        }
+        function closeConfigModal() {
+            document.getElementById('configModal')?.classList.add('opacity-0', 'pointer-events-none');
+        }
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            if (toast) {
+                toast.innerText = msg;
+                toast.classList.remove('opacity-0', 'translate-y-2', 'pointer-events-none');
+                setTimeout(() => {
+                    toast.classList.add('opacity-0', 'translate-y-2', 'pointer-events-none');
+                }, 3000);
+            }
+        }
+
+        const canvas = document.getElementById('heartCanvas');
+        const ctx = canvas ? canvas.getContext('2d') : null;
+        let hearts = [];
+
+        function resizeCanvas() {
+            if (canvas) {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Heart {
+            constructor() { this.reset(); }
+            reset() {
+                if (!canvas) return;
+                this.x = Math.random() * canvas.width;
+                this.y = canvas.height + 20;
+                this.size = Math.random() * 14 + 8;
+                this.speedY = Math.random() * 1.2 + 0.4;
+                this.opacity = Math.random() * 0.5 + 0.3;
+                this.color = `hsla(${Math.random() * 30 + 340}, 85%, 75%, ${this.opacity})`;
+            }
+            update() {
+                if (!canvas) return;
+                this.y -= this.speedY;
+                this.x += Math.sin(this.y * 0.01) * 0.5;
+                if (this.y < -20) this.reset();
+            }
+            draw() {
+                if (!ctx) return;
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.beginPath();
+                ctx.fillStyle = this.color;
+                const topCurveHeight = this.size * 0.3;
+                ctx.moveTo(0, topCurveHeight);
+                ctx.bezierCurveTo(0, 0, -this.size / 2, 0, -this.size / 2, topCurveHeight);
+                ctx.bezierCurveTo(-this.size / 2, (this.size + topCurveHeight) / 2, 0, this.size, 0, this.size);
+                ctx.bezierCurveTo(0, this.size, this.size / 2, (this.size + topCurveHeight) / 2, this.size / 2, topCurveHeight);
+                ctx.bezierCurveTo(this.size / 2, 0, 0, 0, 0, topCurveHeight);
+                ctx.closePath();
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+        if (canvas) {
+            for (let i = 0; i < 28; i++) hearts.push(new Heart());
+        }
+
+        function animateCanvas() {
+            if (ctx && canvas) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                hearts.forEach(h => { h.update(); h.draw(); });
+            }
+            requestAnimationFrame(animateCanvas);
+        }
+        animateCanvas();
+
+        // Initialize on window load
+        window.onload = function() {
+            detectMode();
+            const todayEl = document.getElementById('todayDate');
+            if (todayEl) {
+                todayEl.innerText = new Date().toLocaleDateString('en-US', {
+                    month: 'long', day: 'numeric', year: 'numeric'
+                });
+            }
+        };
+    </script>
+</body>
+</html>
